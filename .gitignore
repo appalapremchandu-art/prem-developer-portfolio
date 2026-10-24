@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# OS files
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+
+# Local verification & one-off tooling artifacts (not part of the build)
+verify-out.txt
+verify-shots/
+scripts/verify-lifelink.mjs
+scripts/generate-og.mjs

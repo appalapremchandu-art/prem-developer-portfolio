@@ -1,0 +1,356 @@
+/* =============================================================================
+   Components — src/styles/components.css
+   -----------------------------------------------------------------------------
+   Component-level VISUAL styling: the site header / navigation, buttons and
+   CTAs, cards, tags / badges, section headings, the `is-placeholder` honesty
+   treatment, disabled-control styling, and icon sizing. Every value references
+   ONLY the design tokens from tokens.css (var(--...)); the handful of literal
+   numbers here are structural (positions, hairline borders, bar dimensions,
+   blur radius) for which no token exists.
+
+   CASCADE ORDER (prem-portfolio): tokens -> reset -> base -> layout ->
+   components -> utilities. Because this layer loads AFTER layout.css, the
+   `.nav__menu` display/position rules below are authoritative — this file OWNS
+   the navigation menu's collapsed (mobile) / inline (desktop) behavior.
+
+   ACCENT POLICY (Requirement 12.3): the teal accent is used STRICTLY for
+   emphasis — CTA fills, interactive/active link text, the brand mark, section
+   eyebrows, and focus affordances. Neutral surfaces never carry it.
+
+   Markup contract (canonical classes, matching index.html exactly):
+     header.site-header > .container.site-header__inner
+       a.brand ( span.brand__mark · span.brand__name )
+       nav.nav ( button.nav-toggle > span.nav-toggle__bar ×3
+                 ul.nav__menu#primary-menu > li.nav__item > a.nav__link )
+     main > section.section[.section--hero]
+       .section__head ( p.section__eyebrow · h2.section__title ) · .section__body
+     footer.site-footer
+
+   Responsive model (mobile-first): base styles target <= 768px; the single
+   `@media (min-width: 769px)` block covers tablet + desktop (>= 769px). The
+   breakpoint is a literal px because custom properties cannot be used inside
+   media-query conditions.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Site header
+   A premium translucent bar: solid charcoal surface as the robust default, and
+   a blurred near-black glass effect layered on only where backdrop-filter is
+   supported. A hairline bottom border separates it from the page content.
+   (Layout owns the sticky positioning and stacking in layout.css.)
+   -------------------------------------------------------------------------- */
+.site-header {
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .site-header {
+    background: color-mix(in srgb, var(--surface-0) 80%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Brand
+   The monogram mark carries the accent (emphasis); the full name stays neutral.
+   -------------------------------------------------------------------------- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.brand__mark {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: var(--fw-bold);
+}
+
+.brand__name {
+  color: var(--fg);
+  font-weight: var(--fw-semibold);
+}
+
+/* -----------------------------------------------------------------------------
+   Navigation
+   `.nav` is the positioning context (position: relative) for the collapsed
+   mobile menu panel, which is absolutely positioned and drops below the bar.
+   -------------------------------------------------------------------------- */
+.nav {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hamburger toggle — transparent, borderless, three stacked accent-free bars.
+   Layout.css already sets its inline-flex + centering and hides it at >=769px;
+   this adds the column stacking and the bar visuals. */
+.nav-toggle {
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: var(--radius-pill);
+}
+
+/* Menu — BASE (mobile, <= 768px): hidden dropdown panel anchored below the bar.
+   This layer OWNS the menu's display: it stays `none` until nav JS adds
+   `.is-open`, at which point it becomes a floating surface panel. */
+.nav__menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  margin: var(--space-2) 0 0;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 12rem;
+  padding: var(--space-3);
+  list-style: none;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+}
+
+/* Open state (toggled by js/nav.js) reveals the mobile panel. */
+.nav__menu.is-open {
+  display: flex;
+}
+
+.nav__item {
+  list-style: none;
+}
+
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--fg-muted);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+
+/* Hover and active (scroll-spy sets aria-current / .is-active) use the accent. */
+.nav__link:hover,
+.nav__link[aria-current='true'],
+.nav__link.is-active {
+  color: var(--accent);
+}
+
+/* Understated active/hover underline indicator (transform-only, no layout shift). */
+.nav__link { position: relative; }
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.nav__link:hover::after,
+.nav__link[aria-current='true']::after,
+.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* -----------------------------------------------------------------------------
+   Buttons / CTAs
+   `.btn` is the shared control base; `--primary` is the accent fill (emphasis),
+   `--ghost` is a neutral outlined control. Disabled styling supports the
+   resume control's not-yet-available state (Requirement 9.3).
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard),
+    color var(--dur-base) var(--ease-standard);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--fg);
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Disabled / inert controls (e.g. the resume download when no PDF is supplied,
+   Req 9.3). The native `disabled` attribute prevents activation (Req 9.4);
+   these rules only communicate the state visually. */
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* -----------------------------------------------------------------------------
+   Cards
+   Used by project / education / contact tiles. Subtle, premium hover:
+   a slightly stronger boundary, a soft elevation shadow, and a small lift.
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+/* -----------------------------------------------------------------------------
+   Tags / badges
+   Mono pills for skills and project stack entries. Neutral by default so they
+   read as metadata rather than emphasis.
+   -------------------------------------------------------------------------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--fg-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-3);
+}
+
+/* -----------------------------------------------------------------------------
+   Section headings
+   The mono eyebrow (section number) carries the warm champagne detail color; the title
+   is neutral and tight.
+   -------------------------------------------------------------------------- */
+.section__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-warm);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--fg);
+}
+
+/* -----------------------------------------------------------------------------
+   Placeholder treatment (Requirement 18.2)
+   Every un-supplied value renders as an identifiable placeholder: amber text in
+   the mono font so it is visually distinct from supplied content. The control
+   variant adds a dashed boundary for link/button placeholders.
+   -------------------------------------------------------------------------- */
+.is-placeholder {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--placeholder-fg);
+}
+
+.is-placeholder--control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 1px dashed var(--placeholder-fg);
+  border-radius: var(--radius-sm);
+}
+
+/* -----------------------------------------------------------------------------
+   Icons (Lucide SVGs)
+   Scale with the surrounding text (1em) and inherit color via currentColor so a
+   single rule themes every icon. Targets both an explicit `.icon` class and the
+   `.lucide` class Lucide applies to its generated SVGs.
+   -------------------------------------------------------------------------- */
+.icon,
+.lucide {
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  fill: none;
+  vertical-align: -0.125em;
+}
+
+/* =============================================================================
+   Tablet and up — viewport >= 769px (Requirement 15.2, 15.3)
+   The menu stops being a collapsed dropdown and becomes an always-visible
+   inline row. These rules override the mobile base above (components loads
+   after layout, so they are authoritative for `.nav__menu`).
+   ============================================================================= */
+@media (min-width: 769px) {
+  .nav__menu {
+    display: flex;
+    position: static;
+    z-index: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+    margin-top: 0;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,321 @@
+/* =============================================================================
+   Sections — src/styles/sections.css
+   -----------------------------------------------------------------------------
+   Phase II section-COMPONENT styling: the structural classes emitted by the
+   per-section renderers in src/js/render.js (hero, about, skills groups,
+   project / education cards, resume control, contact grid items, footer).
+   It styles ONLY the new classes those renderers add; the shared primitives
+   they reuse — .card, .tag, .btn/.btn--primary/.btn--ghost, the responsive
+   grids (.skills-grid/.projects-grid/.contact-grid), and the
+   .is-placeholder treatment — are already owned by layout.css and
+   components.css and are intentionally NOT redefined here.
+
+   IMPORT POSITION (required): main.js imports this file AFTER components.css and
+   BEFORE utilities.css. The full cascade is therefore:
+     tokens -> reset -> base -> layout -> components -> sections -> utilities
+   Loading after components lets these rules refine component looks where needed;
+   loading before utilities keeps the utility helpers (visually-hidden, the
+   [data-reveal] progressive-enhancement gate) authoritative.
+
+   TOKENS ONLY: every value references a design token from tokens.css
+   (var(--...)). A few literals are intrinsic reading measures (ch) and the
+   two-column `auto 1fr` definition-list track, for which no token exists.
+
+   ACCENT POLICY (Requirement 12.3): the teal accent appears only on emphasis —
+   the education year eyebrow, link hover, and footer links. Neutral surfaces
+   and body copy stay on the foreground tints.
+
+   NO HORIZONTAL OVERFLOW (Requirement 15.4): every block sets `min-width: 0`
+   so it can shrink inside its grid/flex track, and long words / URLs wrap via
+   `overflow-wrap`.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Hero (renderHero): single <h1> name, headline, tagline, and a CTA row.
+   -------------------------------------------------------------------------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.hero__name {
+  margin: 0;
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--fg);
+  overflow-wrap: break-word;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--fg-muted);
+}
+
+.hero__tagline {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--fs-base);
+  color: var(--fg-subtle);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* -----------------------------------------------------------------------------
+   About (renderAbout): a reading-measure summary and an optional highlight list.
+   -------------------------------------------------------------------------- */
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 65ch;
+  min-width: 0;
+}
+
+.about__summary {
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: var(--lh-base);
+  color: var(--fg-muted);
+}
+
+/* Keep native list markers (reset.css zeroes padding but only drops markers for
+   role="list"); the restored padding-left makes room for the discs, and
+   adjacent-sibling margins space the items without `display:flex` — which would
+   suppress the markers. */
+.about__highlights {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--fg-muted);
+}
+
+.about__highlights li {
+  line-height: var(--lh-base);
+}
+
+.about__highlights li + li {
+  margin-top: var(--space-2);
+}
+
+/* -----------------------------------------------------------------------------
+   Skills (renderSkills): one labeled group per category inside .skills-grid.
+   The mono, tracked, uppercase title reads as an eyebrow label; tags wrap.
+   -------------------------------------------------------------------------- */
+.skill-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.skill-group__title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.skill-group__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   Projects (renderProjects): a flex-column card; the link row is pinned to the
+   bottom (margin-top:auto) so cards of unequal height align their actions.
+   -------------------------------------------------------------------------- */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.project-card__title {
+  font-family: var(--font-display);
+  margin: 0;
+  font-size: var(--fs-lg);
+  color: var(--fg);
+  overflow-wrap: break-word;
+}
+
+.project-card__tagline {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--fg-muted);
+}
+
+.project-card__desc {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--fg-muted);
+}
+
+.project-card__desc li {
+  line-height: var(--lh-snug);
+}
+
+.project-card__desc li + li {
+  margin-top: var(--space-2);
+}
+
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+/* Supplied demo/repo anchors styled as small neutral ghost controls; the
+   control placeholder (.is-placeholder--control) keeps its dashed amber look
+   from components.css. */
+.project-card__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  color: var(--fg);
+}
+
+.project-card__links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------------
+   Education (renderEducation): a prominent degree, an institution sub-line, and
+   a wrapping mono meta row (graduation + score); the timeline stacks the entries.
+   -------------------------------------------------------------------------- */
+.education-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.education-card__degree {
+  font-family: var(--font-display);
+  margin: 0;
+  font-size: var(--fs-lg);
+  color: var(--fg);
+}
+
+/* -----------------------------------------------------------------------------
+   Contact (renderContact): direct-link tiles inside .contact-grid. The email
+   control is a primary button; LinkedIn / GitHub anchors (and their control
+   placeholders) are presented as neutral ghost controls. `:not(.btn)` keeps the
+   primary email button's accent fill untouched.
+   -------------------------------------------------------------------------- */
+.contact-grid > a:not(.btn),
+.contact-grid > .is-placeholder--control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.contact-grid > a:not(.btn) {
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+}
+
+.contact-grid > a:not(.btn):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.contact__email {
+  justify-content: center;
+}
+
+/* -----------------------------------------------------------------------------
+   Footer (renderFooter): name, dynamic copyright, and a social link row,
+   separated from the page by a hairline top border.
+   -------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+  min-width: 0;
+  color: var(--fg-muted);
+}
+
+.footer__name {
+  font-family: var(--font-display);
+  margin: 0;
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+}
+
+.footer__copy {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--fg-subtle);
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.footer__links a {
+  font-size: var(--fs-sm);
+  color: var(--accent);
+}
+
+/* -----------------------------------------------------------------------------
+   Education timeline (renderEducation): the three verified entries stack as
+   editorial cards joined by a restrained emerald left-accent, reading as a
+   simple, responsive timeline. Each entry reuses the .card + .education-card
+   treatment, so spacing, type, and the mono meta row stay consistent and the
+   entries remain fully readable when stacked on mobile.
+   -------------------------------------------------------------------------- */
+.education-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.education-entry {
+  border-left-width: 2px;
+  border-left-color: var(--accent);
+}

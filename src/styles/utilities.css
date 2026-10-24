@@ -1,0 +1,98 @@
+/* =============================================================================
+   Utilities — src/styles/utilities.css
+   -----------------------------------------------------------------------------
+   Small, single-purpose helpers layered on top of everything else: the
+   screen-reader-only `visually-hidden` pattern (plus a keyboard reveal
+   variant), a narrow container width modifier for text-heavy bodies, and the
+   scroll-reveal entrance animation classes used by js/scrollReveal.js.
+
+   CASCADE ORDER (prem-portfolio): tokens -> reset -> base -> layout ->
+   components -> utilities. This file loads LAST so its helpers can adjust what
+   earlier layers established (e.g. `.container--narrow` tightening the shared
+   `.container` max-width from layout.css).
+
+   Motion values reference ONLY the design tokens from tokens.css
+   (var(--dur-slow), var(--ease-out)). The remaining literals here are
+   structural constants of a well-known pattern — the 1px/clip rectangle of the
+   visually-hidden idiom, the reading-measure width, and the small reveal
+   offset — for which no token exists.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Visually hidden (screen-reader-only)  — Requirement 13.1
+   Removes content from the visual layout while keeping it in the accessibility
+   tree and focus order, so it stays reachable and announced by assistive tech.
+   -------------------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reveal variant: when a visually-hidden element (or something inside it)
+   receives keyboard focus, restore it to normal flow so it becomes visible —
+   the standard treatment for skip-style links that are hidden until tabbed to
+   (keeps every control keyboard-operable, Requirement 13.1). */
+.visually-hidden:focus,
+.visually-hidden:focus-within {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: revert;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+}
+
+/* -----------------------------------------------------------------------------
+   Container width helpers
+   Pairs with the shared `.container` in layout.css (used as
+   `.container.container--narrow`). Because utilities.css loads after
+   layout.css, this max-width wins over the default `--container-max`, giving
+   text-heavy bodies (e.g. the About summary) a comfortable reading measure
+   while inheriting the container's centering and horizontal padding.
+   -------------------------------------------------------------------------- */
+.container--narrow {
+  max-width: 48rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Scroll-reveal entrance animation  — Requirement 13.5
+   Elements marked `[data-reveal]` start slightly lowered and transparent, then
+   settle into place once js/scrollReveal.js (via IntersectionObserver) adds
+   `.is-visible` as they enter the viewport.
+
+   PROGRESSIVE-ENHANCEMENT SAFEGUARD: the hidden initial state is GATED behind a
+   `.js` class on the root element. main.js (task 12.1) adds `.js` to
+   `document.documentElement` at startup; so when JavaScript is disabled or
+   fails to run, the `.js` ancestor never appears, these rules never match, and
+   every `[data-reveal]` element stays fully visible. Content is never hidden
+   behind script.
+
+   REDUCED MOTION: the global `prefers-reduced-motion` guard in reset.css
+   already collapses animation/transition durations site-wide, so when the
+   visitor prefers reduced motion the transition below is neutralized and
+   revealed content simply appears instantly (js/scrollReveal.js also adds
+   `.is-visible` immediately in that case).
+   -------------------------------------------------------------------------- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}

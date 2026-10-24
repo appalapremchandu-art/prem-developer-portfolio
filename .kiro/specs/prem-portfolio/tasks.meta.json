@@ -1,0 +1,443 @@
+{
+  "pbtResults": {
+    "9.9 Write property test for skills grouping": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779630940
+    },
+    "9.10 Write property test for project stack tags": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779632293
+    },
+    "9.11 Write property test for DSA card minimalism": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779633260
+    },
+    "9.12 Write property test for the resume control": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779634575
+    },
+    "9.13 Write property test for the mailto control": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779635632
+    },
+    "9.14 Write property test for the footer year": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779637041
+    },
+    "10.4 Write property test for icon/image text alternatives": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779638070
+    },
+    "10.5 Write property test for reduced-motion suppression": {
+      "status": "passed",
+      "lastRunTimestamp": 1792779638827
+    }
+  },
+  "executionHistory": {
+    "1.1 Initialize the Vite project, dependencies, config, and folder skeleton": [
+      {
+        "executionId": "6efcc7c1-55af-43eb-b1bd-99205ac8032b",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792771554111
+      },
+      {
+        "executionId": "6efcc7c1-55af-43eb-b1bd-99205ac8032b",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792772167402
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773196581
+      }
+    ],
+    "1. Project scaffold and toolchain": [
+      {
+        "executionId": "6efcc7c1-55af-43eb-b1bd-99205ac8032b",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792772167480
+      }
+    ],
+    "2.1 Implement design tokens (`src/styles/tokens.css`)": [
+      {
+        "executionId": "0587f9b2-d61c-4e62-8ffb-0f0e4a094a9c",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792772336728
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773205277
+      }
+    ],
+    "3.1 Implement `src/data/content.js`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773324074
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773946320
+      }
+    ],
+    "4.1 Implement `src/js/dom.js`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773336201
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773947241
+      }
+    ],
+    "5.1 Build the semantic `index.html` shell": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773336729
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773948147
+      }
+    ],
+    "7.1 Implement `src/styles/layout.css`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773336995
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775014411
+      }
+    ],
+    "3. Content data module (single source of truth)": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773946411
+      }
+    ],
+    "4. Shared DOM and rendering helpers": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773947309
+      }
+    ],
+    "5. Page shell and SEO metadata": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792773948227
+      }
+    ],
+    "2.2 Implement reset and base layers (`src/styles/reset.css`, `src/styles/base.css`)": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792774037093
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775011189
+      }
+    ],
+    "6.1 Implement `src/js/nav.js`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792774038140
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775012790
+      }
+    ],
+    "7.2 Implement `src/styles/components.css`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792774038982
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775013421
+      }
+    ],
+    "2. Visual design system foundation": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775011315
+      }
+    ],
+    "6. Responsive navigation": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775012858
+      }
+    ],
+    "7.3 Implement `src/styles/utilities.css`": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775070681
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775649761
+      }
+    ],
+    "2.3 Write property test for palette contrast thresholds": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775071154
+      },
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775651531
+      }
+    ],
+    "7. Responsive layout and component styling": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775649849
+      }
+    ],
+    "4.2 Write property test for safe external links": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775652027
+      }
+    ],
+    "6.2 Write property test for the menu toggle": [
+      {
+        "executionId": "8d3ebbe2-744a-42a0-ad77-e37b2bc19f8a",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792775652580
+      }
+    ],
+    "9.1 Implement `renderHero` and `renderAbout` in `src/js/render.js`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792776384480
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779846507
+      }
+    ],
+    "10.1 Implement `src/js/scrollReveal.js`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792776385362
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779878322
+      }
+    ],
+    "10.2 Implement `src/js/activeLink.js`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792776386766
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779889352
+      }
+    ],
+    "10.3 Implement `src/js/icons.js`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792776387649
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779890764
+      }
+    ],
+    "12.1 Wire everything in `src/main.js`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792777276646
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779893902
+      }
+    ],
+    "9.9 Write property test for skills grouping": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792778073105
+      },
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779864783
+      }
+    ],
+    "9.2 Implement `renderSkills`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779847607
+      }
+    ],
+    "9.3 Implement `renderProjects`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779848564
+      }
+    ],
+    "9.4 Implement `renderDsa`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779849842
+      }
+    ],
+    "9.5 Implement `renderEducation`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779850614
+      }
+    ],
+    "9.6 Implement `renderResume`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779861228
+      }
+    ],
+    "9.7 Implement `renderContact`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779862461
+      }
+    ],
+    "9.8 Implement `renderFooter`": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779863365
+      }
+    ],
+    "9. Section rendering from content": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779863662
+      }
+    ],
+    "9.10 Write property test for project stack tags": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779865550
+      }
+    ],
+    "9.11 Write property test for DSA card minimalism": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779874093
+      }
+    ],
+    "9.12 Write property test for the resume control": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779875224
+      }
+    ],
+    "9.13 Write property test for the mailto control": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779876548
+      }
+    ],
+    "9.14 Write property test for the footer year": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779877460
+      }
+    ],
+    "10. Progressive enhancements": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779890909
+      }
+    ],
+    "10.4 Write property test for icon/image text alternatives": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779891768
+      }
+    ],
+    "10.5 Write property test for reduced-motion suppression": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779893137
+      }
+    ],
+    "12. Application wiring and whole-page tests": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779894033
+      }
+    ],
+    "8. Checkpoint — Ensure all tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779989478
+      }
+    ],
+    "11. Checkpoint — Ensure all tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "bce48eaa-8d4c-47aa-8663-2f7542d66edd",
+        "chatSessionId": "sess_61321690-035e-47ed-a3e3-b746233b710e",
+        "timestamp": 1792779990389
+      }
+    ]
+  }
+}

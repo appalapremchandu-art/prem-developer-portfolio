@@ -1,0 +1,787 @@
+/* =============================================================================
+   Polish — src/styles/polish.css
+   -----------------------------------------------------------------------------
+   Additive visual-polish layer, imported LAST (after utilities) so its
+   refinements win on equal specificity. It only ENHANCES existing components:
+   button :active + comfortable touch targets, a calmer/premium treatment for
+   unavailable & placeholder states, a restrained hero accent, a small heading
+   underline, and keyboard affordance parity. Tokens only. It never hides
+   content and never depends on JavaScript; the global prefers-reduced-motion
+   guard in reset.css continues to neutralize transitions.
+   ============================================================================= */
+
+/* --- Buttons: the missing :active feedback + comfortable touch targets ----- */
+.btn {
+  min-height: 2.75rem;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Link-style controls get the same subtle active nudge. */
+.project-card__links a:active,
+.contact-grid > a:not(.btn):active {
+  transform: translateY(1px);
+}
+
+.nav__link:active {
+  color: var(--accent-hover);
+}
+
+/* Comfortable touch targets on touch pointers (Phase 5). */
+@media (pointer: coarse) {
+  .nav__link,
+  .project-card__links a,
+  .contact-grid > a:not(.btn),
+  .footer__links a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* --- Hero: restrained, premium treatment ---------------------------------- */
+/* Present the real education headline as a mono accent eyebrow ABOVE the name
+   (a common developer-portfolio pattern; uses only the real headline text —
+   flex `order` changes visual order only, DOM/heading order is unchanged). */
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+.hero__eyebrow {
+  order: -1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+.hero__tagline {
+  max-width: 52ch;
+  font-size: var(--fs-md);
+  color: var(--fg-muted);
+}
+
+/* One tasteful, very faint radial wash behind the hero — purely decorative,
+   contained by `isolation: isolate` so it never bleeds over page content. */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: -1rem;
+  right: -1rem;
+  height: 14rem;
+  background: radial-gradient(55% 100% at 25% 0%, var(--accent-soft), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --- Section headings: a short accent underline for hierarchy ------------- */
+.section__title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-top: var(--space-2);
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+/* --- Calmer, premium unavailable / placeholder states (Phase 4) ----------- */
+/* Swap the loud amber for a muted, clearly non-interactive treatment. The
+   "to be added" meaning still reads through the label text the renderers
+   supply (e.g. "Demo not available", "GitHub not linked"). */
+.is-placeholder {
+  color: var(--fg-subtle);
+}
+.is-placeholder--control {
+  border-color: var(--border);
+  color: var(--fg-subtle);
+  cursor: default;
+}
+
+/* --- Cards: keyboard affordance parity with hover ------------------------- */
+.card:focus-within {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+/* -----------------------------------------------------------------------------
+   Project-card + content-state refinements (appended during the polish pass)
+   -------------------------------------------------------------------------- */
+
+/* Missing demo/repo: a plain, subtle, clearly non-interactive note — NOT a button. */
+.project-card__links .is-placeholder--control {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-size: var(--fs-xs);
+}
+
+/* Clearer separation between skill tags (Skills section). */
+.skill-group__tags {
+  gap: var(--space-3);
+}
+
+/* Comfortable, consistent spacing for project stack tags. */
+.project-card__stack {
+  gap: var(--space-2) var(--space-3);
+}
+/* -----------------------------------------------------------------------------
+   Live Demo CTA — a prominent accent button, distinct from secondary links.
+   The two-class selector outranks the generic `.project-card__links a` rule, so
+   the demo link reads as the primary action on each card.
+   -------------------------------------------------------------------------- */
+.project-card__links .project-card__cta {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--on-accent);
+  font-weight: var(--fw-semibold);
+  padding: var(--space-2) var(--space-4);
+}
+.project-card__links .project-card__cta:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+  text-decoration: none;
+}
+/* -----------------------------------------------------------------------------
+   Project preview tile (decorative) + hero eyebrow accent (makeover pass)
+   The preview is a CSS monogram panel — a decorative brand mark, NOT a
+   screenshot. Consistent across cards (same treatment, different initial).
+   -------------------------------------------------------------------------- */
+.project-card__preview {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3);
+  min-height: 11rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(120% 140% at 20% 15%, var(--accent-soft), transparent 55%),
+    linear-gradient(160deg, var(--surface-2), var(--surface-1));
+  overflow: hidden;
+}
+
+
+.project-card:hover .project-card__preview {
+  border-color: var(--border-strong);
+}
+
+/* A small accent dash before the hero eyebrow label — tasteful, restrained. */
+.hero__eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  margin-right: var(--space-2);
+  background: var(--accent);
+  vertical-align: middle;
+}
+/* Non-interactive contact detail (e.g. location); phone renders as a link. */
+.contact__detail {
+  display: inline-flex;
+  align-items: center;
+  color: var(--fg-muted);
+  font-size: var(--fs-sm);
+}
+a.contact__detail:hover {
+  color: var(--accent);
+}
+/* ========================= Premium makeover (appended) =========================
+   Atmospheric backdrop, oversized hero, and asymmetric project feature rows.
+   All token-based, static (reduced-motion safe), no neon, overflow-guarded. */
+
+/* Atmospheric midnight backdrop: a faint emerald glow near the top plus a very
+   subtle grid texture layered over the charcoal surface. Decorative only. */
+body {
+  background-color: var(--surface-0);
+  background-image:
+    radial-gradient(1100px 560px at 50% -6%, rgba(46, 204, 113, 0.07), transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 46px 46px, 46px 46px;
+  background-repeat: no-repeat, repeat, repeat;
+}
+
+/* Oversized, editorial hero name. */
+.hero__name {
+  font-size: clamp(2.75rem, 1.6rem + 6.5vw, 5.75rem);
+  letter-spacing: -0.02em;
+}
+
+/* Project showcase: wide single-column feature rows from tablet up; asymmetric
+   two-column rows (alternating preview side) on desktop for visual importance. */
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+@media (min-width: 769px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-8);
+  }
+  .project-card__preview {
+    min-height: 14rem;
+  }
+
+  .project-card:nth-child(even) .project-card__preview {
+    order: 2;
+  }
+}
+/* ================= Reference-inspired refinement pass (appended) =================
+   Rhythm, spacing, and hierarchy only — no new effects. Token-based, overflow-safe. */
+
+/* Hero: more editorial breathing room between eyebrow, name, tagline, and CTAs. */
+.hero {
+  gap: var(--space-5);
+}
+.hero__actions {
+  margin-top: var(--space-6);
+  gap: var(--space-4);
+}
+
+/* Consistent rhythm: clear separation between each section's header and its body. */
+.section__head {
+  margin-bottom: var(--space-6);
+}
+
+/* Project title + tagline read with stronger hierarchy in the feature rows; the
+   tagline serves as the one-line description (no invented feature claims). */
+.project-card__title {
+  font-size: var(--fs-xl);
+}
+.project-card__tagline {
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--fg-muted);
+}
+/* ============== Focused content/layout refinement pass (appended) ==============
+   Education now shows a flat institution sub-line plus a wrapping row of mono
+   meta items (no "Institution"/"Scores" dt/dd labels), and Contact reads as a
+   natural wrapping row of controls instead of stretched grid cells. These
+   OVERRIDE the earlier grid treatments. Token-based, overflow-safe, reduced-
+   motion safe; nothing is hidden. */
+
+/* Education: institution sub-line sits under the degree. */
+.education-card__institution {
+  margin: 0;
+  color: var(--fg-muted);
+  font-size: var(--fs-md);
+}
+
+/* Education: graduation year + CGPA as a tidy, wrapping row of mono meta items.
+   Overrides the stale `display: grid` (which was for the removed dt/dd rows). */
+.education-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-5);
+}
+.education-card__meta-item {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--fg-muted);
+}
+
+/* Contact: a natural, wrapping row so the email button, GitHub link, phone, and
+   location read as one tidy line instead of stretched, sparse grid cells. */
+.contact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+}
+
+/* Hero headline statement: the oversized line; only .hero__headline-em is accent. */
+.hero__headline {
+  margin: 0;
+  max-width: 24ch;
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-semibold);
+  color: var(--fg);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.hero__headline-em {
+  color: var(--accent);
+}
+
+/* ===== Project mini-UI previews (decorative, aria-hidden) ===================
+   Illustrative product sketches - NOT screenshots and NOT real user/medical
+   data. Token-based so each project reads as its real concept: RepairHub =
+   repair-quote comparison + booking; LifeLink = blood-donor discovery with a
+   group/location filter. No animation of their own (reduced-motion safe); the
+   preview panel's overflow contains them so they never cause horizontal scroll. */
+.pv {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--fg-muted);
+}
+.pv__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.pv__title {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--fg);
+}
+.pv__chip {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  color: var(--fg-subtle);
+  white-space: nowrap;
+}
+.pv__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.pv__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.pv__row.is-selected {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-soft);
+}
+.pv__dot {
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.pv__avatar {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--surface-3), var(--surface-2));
+  border: 1px solid var(--border);
+}
+.pv__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.pv__name {
+  font-size: var(--fs-xs);
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pv__sub {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--fg-subtle);
+  white-space: nowrap;
+}
+.pv__line {
+  height: 0.45rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+}
+.pv__line--wide { width: 72%; }
+.pv__line--narrow { width: 45%; background: var(--surface-2); }
+.pv__price {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--fg);
+}
+.pv__badge {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+}
+.pv__status {
+  flex: none;
+  font-size: var(--fs-xs);
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  white-space: nowrap;
+}
+.pv__status--muted {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-subtle);
+}
+.pv__cta {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: var(--fw-semibold);
+}
+.pv__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+.pv__searchlabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--fg-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pv__filter {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  white-space: nowrap;
+}
+.pv__filter--muted {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-subtle);
+}
+
+/* Project mini-UI micro-animations: rows cascade in once when the card enters
+   (via .is-visible from scrollReveal.js); RepairHub's selected quote gets one
+   gentle glow to draw the comparison. Default (no .is-visible / no JS) is fully
+   visible; the global reduced-motion guard makes these instant. */
+@keyframes pv-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pv-select-glow {
+  0%, 100% { box-shadow: inset 0 0 0 1px var(--accent-soft); }
+  45%      { box-shadow: inset 0 0 0 1px var(--accent-soft), 0 0 0.85rem var(--accent-soft); }
+}
+.js .project-card.is-visible .pv__rows > * {
+  animation: pv-in 0.5s var(--ease-out) both;
+}
+.js .project-card.is-visible .pv__rows > *:nth-child(2) { animation-delay: 0.09s; }
+.js .project-card.is-visible .pv__rows > *:nth-child(3) { animation-delay: 0.18s; }
+.js .project-card.is-visible .pv--repairhub .pv__row.is-selected {
+  animation: pv-in 0.5s var(--ease-out) 0.09s both, pv-select-glow 1.8s var(--ease-standard) 0.7s 1;
+}
+
+/* ===== Project preview polish: app-window framing + balance ==================
+   Each mini-UI is framed as a small application window (title bar + screen) with
+   restrained hover depth, and the desktop grid centers the preview against the
+   project text so the card no longer has underused space. Decorative, still
+   illustrative (not real data); reduced-motion neutralizes the transitions. */
+.pv {
+  height: 100%;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+.pv__titlebar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.pv__dots { display: inline-flex; gap: 0.3rem; flex: none; }
+.pv__tldot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--surface-3); }
+.pv__dots .pv__tldot:first-child { background: var(--accent); opacity: 0.85; }
+.pv__winlabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--fg-subtle);
+}
+.pv__screen {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  min-width: 0;
+}
+.pv__row.is-selected {
+  background: var(--accent-soft);
+}
+.project-card__preview {
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+.project-card:hover .project-card__preview {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+@media (min-width: 1024px) {
+  .project-card { align-items: center; }
+  .project-card__preview { min-height: 16rem; }
+}
+
+/* ===== Phase 2: interactive preview states + hero word reveal ===============
+   Previews stay decorative (aria-hidden on the panel); the selection/filter is
+   a pointer flourish - the accessible path is each project's Live demo link.
+   Short transitions only; the global reduced-motion guard neutralizes them. */
+.pv__quote { cursor: pointer; transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+.pv__quote:hover { border-color: var(--border-strong); }
+.pv__quote .pv__status { display: none; }
+.pv__quote.is-selected .pv__status { display: inline-flex; }
+
+.pv__filters { display: flex; flex-wrap: wrap; gap: var(--space-2); min-width: 0; }
+.pv__filter { cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+.pv__filter:hover { border-color: var(--accent); }
+.pv__filter.is-active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+.pv__donor { transition: opacity var(--dur-base) var(--ease-out); }
+.pv__donor.is-dim { opacity: 0.35; }
+.pv__donor.is-hidden { display: none; }
+
+/* Hero headline: word-level staggered reveal (plays when the hero reveals).
+   Hidden start is gated behind .js so the headline is always visible without JS;
+   the global reduced-motion guard collapses the stagger to an instant show. */
+.hero__word { display: inline-block; }
+.js .hero:not(.is-visible) .hero__word { opacity: 0; transform: translateY(0.4em); }
+.js .hero.is-visible .hero__word {
+  animation: hero-word-in 0.55s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+@keyframes hero-word-in {
+  from { opacity: 0; transform: translateY(0.4em); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== Phase 3: hero recomposition (framed editorial masthead) ==============
+   Replaces the stacked flex hero + orbital with a framed, asymmetric grid: a
+   mono meta rule across the top, an oversized display headline (name kicker +
+   statement) and an original isometric "layered system" centerpiece. This block
+   OVERRIDES the earlier hero/orbital rules; the orbital DOM is no longer built,
+   so its leftover rules match nothing. */
+
+.hero { display: block; position: relative; isolation: isolate; }
+.hero::before { content: none; }           /* drop the old radial wash (frame has its own) */
+
+.hero__frame {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(90% 120% at 85% 0%, rgba(46, 204, 113, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--surface-1), var(--surface-0));
+  padding: clamp(1.25rem, 1rem + 2.4vw, 3rem);
+  overflow: hidden;
+}
+.hero__frame::before {              /* corner index tick */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(1.25rem, 1rem + 2.4vw, 3rem);
+  width: 2.5rem;
+  height: 3px;
+  background: var(--accent-warm);
+}
+
+.hero__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  margin-bottom: clamp(1.5rem, 1rem + 3vw, 3rem);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.hero__metatag { color: var(--accent-warm); }
+
+.hero__main { display: grid; gap: clamp(1.5rem, 1rem + 3vw, 3.5rem); align-items: center; }
+@media (min-width: 880px) {
+  .hero__main { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+}
+
+.hero__lead { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+.hero__eyebrow {
+  order: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+.hero__name {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.hero__headline {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 1.1rem + 6.2vw, 5rem);
+  line-height: 1.01;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.hero__headline-em { color: var(--accent); }
+.hero__tagline { margin: 0; max-width: 46ch; font-size: var(--fs-md); color: var(--fg-muted); }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-2); }
+
+/* centerpiece: reset ALL the old absolute/orbital .hero__visual props */
+.hero__visual {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  overflow: visible;
+  pointer-events: none;
+  perspective: none;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  transform: translate3d(calc(var(--hero-px, 0%) * -0.4), calc(var(--hero-py, 0%) * -0.4), 0);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.hero__visual::before { content: none; }    /* kill the old backlight pseudo */
+.hero__figure-wrap { width: min(100%, 25rem); }
+.hero__figure { width: 100%; height: auto; overflow: visible; }
+.hero__fig-glow { fill: rgba(46, 204, 113, 0.10); }
+.hero__fig-layer { fill: rgba(46, 204, 113, 0.05); stroke: var(--accent); stroke-width: 1.25; stroke-linejoin: round; }
+.hero__fig-layer--1 { stroke: var(--accent-hover); opacity: 0.95; }
+.hero__fig-layer--2 { opacity: 0.7; }
+.hero__fig-layer--3 { opacity: 0.45; }
+.hero__fig-edge { stroke: var(--accent); stroke-width: 1; opacity: 0.4; }
+.hero__fig-axis { stroke: var(--fg-subtle); stroke-width: 1; opacity: 0.25; stroke-dasharray: 3 5; }
+.hero__fig-node { fill: var(--accent); }
+.hero__fig-node--lead { fill: var(--accent-hover); }
+
+@media (min-width: 880px) {
+  .hero__figure { animation: hero-figure-float 9s var(--ease-standard) infinite; }
+}
+@keyframes hero-figure-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+/* show the centerpiece on small screens (override the old orbital hide), sized down */
+@media (max-width: 879px) {
+  .hero__visual { display: grid; order: -1; }
+  .hero__figure-wrap { width: min(62%, 15rem); margin-inline: auto; }
+}
+
+/* intro coordination: freeze the headline word cascade until the intro clears */
+html.intro-active .hero__word { animation-play-state: paused; }
+
+/* ===== Phase 4: purposeful pointer-reactive 3D + staggered reveals ==========
+   Transform-only and GPU-friendly. Fully gated: the tilt effects apply only on
+   fine pointers and (via main.js) only when reduced motion is NOT requested, so
+   touch, keyboard, and reduced-motion visitors get a flat, static, fully usable
+   layout. Custom props default to 0, so cards and the centerpiece stay flat
+   until JS tracks the pointer (and with no JS at all). Nothing here changes
+   layout, focus order, or the DOM. */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Project cards tilt toward the cursor. --ptr-x/--ptr-y (-0.5..0.5) come from
+     js/cardTilt.js; the paired selector outranks the generic .card:hover lift so
+     the tilt is the single source of transform on project cards. */
+  .project-card,
+  .project-card:hover {
+    transform:
+      perspective(900px)
+      rotateX(calc(var(--ptr-y, 0) * -5deg))
+      rotateY(calc(var(--ptr-x, 0) * 5deg));
+  }
+  /* Track the pointer instantly while active; settle smoothly on leave via the
+     base .card transform transition. */
+  .project-card.is-tilting {
+    transition:
+      border-color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+  }
+  .project-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-2);
+  }
+  /* Keep the interactive preview perfectly still on hover so its chips/quote
+     rows are an easy, reliable click target (the card keeps its border/shadow
+     hover feedback). */
+  .project-card:hover .project-card__preview {
+    transform: none;
+  }
+
+  /* Hero centerpiece turns gently toward the pointer, layered on top of the
+     existing translate parallax. --hero-nx/--hero-ny (-0.5..0.5) are set on
+     .hero__visual by main.js and inherit to the figure wrap. */
+  .hero__figure-wrap {
+    transform:
+      perspective(1100px)
+      rotateX(calc(var(--hero-ny, 0) * -6deg))
+      rotateY(calc(var(--hero-nx, 0) * 6deg));
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+}
+
+/* Staggered entrance for grouped reveal items: a short delay cascade on the
+   existing [data-reveal] transition. Gated to no-preference so reduced-motion
+   visitors still reveal everything instantly. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .projects-grid > [data-reveal]:nth-child(2) { transition-delay: 90ms; }
+  .js .education-timeline > [data-reveal]:nth-child(2) { transition-delay: 70ms; }
+  .js .education-timeline > [data-reveal]:nth-child(3) { transition-delay: 140ms; }
+}

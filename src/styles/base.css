@@ -1,0 +1,140 @@
+/* =============================================================================
+   Base Layer — src/styles/base.css
+   -----------------------------------------------------------------------------
+   Token-driven defaults for bare HTML elements: the page body, heading rhythm,
+   links, text selection, the single `:focus-visible` accent ring shared by all
+   interactive controls, and the keyboard skip-link.
+
+   CASCADE ORDER (prem-portfolio): tokens -> reset -> base -> layout ->
+   components -> utilities. This layer owns element defaults, the focus ring,
+   and the skip-link ONLY. Nav, cards, buttons, tags and other component styling
+   live in components.css. Every value here references a token from tokens.css.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Page body — primary surface + foreground and the base type system.
+   `--fg` on `--surface-0` is ~16.4:1, well past the 4.5:1 body-text floor
+   (Requirement 12.4).
+   -------------------------------------------------------------------------- */
+body {
+  background: var(--surface-0);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -----------------------------------------------------------------------------
+   Headings — type-scale sizes with tight/snug leading and a consistent
+   bottom-margin rhythm driven by spacing tokens.
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--fg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  margin-bottom: var(--space-3);
+}
+
+h1 {
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+}
+
+h2 {
+  font-size: var(--fs-xl);
+}
+
+h3 {
+  font-size: var(--fs-lg);
+}
+
+h4 {
+  font-size: var(--fs-md);
+}
+
+h5 {
+  font-size: var(--fs-base);
+}
+
+h6 {
+  font-size: var(--fs-sm);
+}
+
+/* Flowing text rhythm; trailing elements shed their margin so containers stay
+   tidy and spacing remains layout-driven. */
+p {
+  margin-bottom: var(--space-4);
+}
+
+p:last-child,
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+h5:last-child,
+h6:last-child {
+  margin-bottom: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   Links — accent is reserved for interactive text (Requirement 12.3). The
+   accent on the surfaces is ~10.4:1, well past the 3:1 boundary floor
+   (Requirement 12.5).
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* Tinted teal selection that keeps foreground text legible. */
+::selection {
+  background: var(--accent-soft);
+}
+
+/* -----------------------------------------------------------------------------
+   Focus-visible ring — the single, consistent keyboard-focus indicator on all
+   interactive controls (Requirements 13.2, 12.5). Keyboard focus only, so a
+   mouse press does not paint a ring. The accent ring is ~9.8:1 against raised
+   surfaces, past the 3:1 focus-indicator floor.
+   -------------------------------------------------------------------------- */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* -----------------------------------------------------------------------------
+   Skip link — the first Tab stop (Requirement 13.1). Hidden off-screen until
+   focused, then revealed at the top-left with accent styling above all other
+   content so keyboard users can jump straight to the main content.
+   -------------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-1);
+  color: var(--fg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}

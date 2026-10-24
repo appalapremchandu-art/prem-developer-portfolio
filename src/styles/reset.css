@@ -1,0 +1,101 @@
+/* =============================================================================
+   Reset Layer — src/styles/reset.css
+   -----------------------------------------------------------------------------
+   A minimal, modern CSS reset: predictable box-sizing, normalized default
+   margins, sane media + form-element defaults, and the GLOBAL
+   `prefers-reduced-motion` dampening guard.
+
+   CASCADE ORDER (prem-portfolio): tokens -> reset -> base -> layout ->
+   components -> utilities. This layer owns the reset and the reduced-motion
+   guard ONLY; element defaults (colors, type rhythm, focus ring, skip-link)
+   live in base.css. No component/section styling belongs here.
+
+   This file references no tokens; it normalizes the user-agent baseline so the
+   token-driven layers above cascade predictably.
+   ============================================================================= */
+
+/* Predictable box model everywhere, including generated boxes. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove the default margin that the user agent puts on structural and
+   text-flow elements so spacing is driven intentionally by later layers. */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+}
+
+/* Lists get no default indentation; markers are removed only where the author
+   has opted a list out of its default presentation via role="list", which
+   preserves list semantics for assistive technology elsewhere. */
+ul,
+ol {
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Keep text sizing stable after orientation changes without disabling the
+   user's ability to zoom. Smooth scrolling is intentionally NOT set here —
+   programmatic scrolling is handled in JavaScript so it can honor the
+   reduced-motion preference. */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Media defaults: block-level by default and never wider than their container,
+   which prevents horizontal overflow. */
+img,
+svg,
+video,
+canvas,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form controls should inherit typography and color rather than fall back to
+   the user-agent defaults. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* -----------------------------------------------------------------------------
+   Global reduced-motion dampening guard (Requirement 13.5)
+   When the visitor prefers reduced motion, near-eliminate animation and
+   transition durations and force non-smooth scrolling. JavaScript reads the
+   same `prefers-reduced-motion` signal so programmatic scroll/reveal are
+   suppressed in tandem.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

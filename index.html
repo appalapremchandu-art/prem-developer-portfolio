@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Supports the charcoal / near-black surface design (Req 12.1) -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#101211" />
+
+    <!-- SEO + social metadata (Req 14.1–14.4); strings sourced from design seo.* -->
+    <title>Prem Chandu Appala — Aspiring Software Developer (B.Tech CSE)</title>
+    <meta
+      name="description"
+      content="Portfolio of Prem Chandu Appala, a B.Tech Computer Science and Engineering student and aspiring software developer."
+    />
+
+    <!-- Open Graph (Req 14.3) -->
+    <meta property="og:title" content="Prem Chandu Appala — Aspiring Software Developer (B.Tech CSE)" />
+    <meta
+      property="og:description"
+      content="Portfolio of Prem Chandu Appala, a B.Tech Computer Science and Engineering student and aspiring software developer."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Prem Chandu Appala, Aspiring Software Developer, B.Tech CSE" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (Req 14.4) -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <!-- First focusable element: keyboard users can jump past the nav (Req 13.1, 13.3) -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ========================= Navigation_Bar (Req 1.1, 2.x) ========================= -->
+    <header class="site-header" data-site-header>
+      <div class="container site-header__inner">
+        <a class="brand" href="#hero" aria-label="Prem Chandu Appala, back to top">
+          <span class="brand__mark" aria-hidden="true">PA</span>
+          <span class="brand__name">Prem Chandu Appala</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <!-- Hamburger shown at <=768px; wired by js/nav.js (task 6.1) -->
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-controls="primary-menu"
+            aria-expanded="false"
+            aria-label="Toggle menu"
+            data-nav-toggle
+          >
+            <span class="nav-toggle__bar" aria-hidden="true"></span>
+            <span class="nav-toggle__bar" aria-hidden="true"></span>
+            <span class="nav-toggle__bar" aria-hidden="true"></span>
+          </button>
+
+          <!-- Menu links are built from the sections registry by js/nav.js (task 6.1) -->
+          <ul class="nav__menu" id="primary-menu" data-nav-menu></ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ========================= Page content ========================= -->
+    <main id="main" tabindex="-1">
+      <!-- 1. Hero_Section (Req 3.x): single <h1>, headline, CTA rendered by renderHero -->
+      <section id="hero" class="section section--hero" aria-label="Introduction">
+        <div class="container">
+          <div class="section__body" data-render="hero">
+            <!-- Hydrated by renderHero (task 9.1) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. About_Section (Req 4.x) -->
+      <section id="about" class="section" aria-labelledby="about-title">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow" aria-hidden="true">01</p>
+            <h2 id="about-title" class="section__title">About</h2>
+          </div>
+          <div class="section__body" data-render="about">
+            <!-- Hydrated by renderAbout (task 9.1) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Skills_Section (Req 5.x) -->
+      <section id="skills" class="section" aria-labelledby="skills-title">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow" aria-hidden="true">02</p>
+            <h2 id="skills-title" class="section__title">Skills</h2>
+          </div>
+          <div class="section__body" data-render="skills">
+            <!-- Hydrated by renderSkills (task 9.2) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Projects_Section (Req 6.x) -->
+      <section id="projects" class="section" aria-labelledby="projects-title">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow" aria-hidden="true">03</p>
+            <h2 id="projects-title" class="section__title">Projects</h2>
+          </div>
+          <div class="section__body" data-render="projects">
+            <!-- Hydrated by renderProjects (task 9.3) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Education_Section (Req 8.x) -->
+      <section id="education" class="section" aria-labelledby="education-title">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow" aria-hidden="true">04</p>
+            <h2 id="education-title" class="section__title">Education</h2>
+          </div>
+          <div class="section__body" data-render="education">
+            <!-- Hydrated by renderEducation (task 9.5) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Contact_Section (Req 10.x) -->
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <div class="container">
+          <div class="section__head">
+            <p class="section__eyebrow" aria-hidden="true">05</p>
+            <h2 id="contact-title" class="section__title">Contact</h2>
+          </div>
+          <div class="section__body" data-render="contact">
+            <!-- Hydrated by renderContact (task 9.7) -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================= Footer_Section (Req 11.x) ========================= -->
+    <footer class="site-footer">
+      <div class="container" data-render="footer">
+        <!-- Hydrated by renderFooter (task 9.8): name, copyright year, GitHub/LinkedIn -->
+      </div>
+    </footer>
+
+    <!-- Entry point; imports CSS layers + wires rendering/nav/enhancements (task 12.1) -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

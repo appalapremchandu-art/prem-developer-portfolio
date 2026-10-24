@@ -1,0 +1,175 @@
+/* =============================================================================
+   Layout — src/styles/layout.css
+   -----------------------------------------------------------------------------
+   Structure, spacing, and responsive behavior only. This layer owns the page
+   container, section vertical rhythm, the navigation bar layout, and the
+   responsive card grids (skills, projects, contact). It references ONLY
+   the design tokens declared in tokens.css (var(--...)) — no hardcoded colors
+   and no spacing values that duplicate a token.
+
+   Out of scope (lives in components.css): all component-specific visual
+   styling — backgrounds, borders, shadows, button/card/tag looks, the
+   `is-placeholder` treatment, and the open/closed visual state of the mobile
+   menu. The actual hamburger toggle behavior (aria-expanded, open state) is
+   owned by nav JS. This file only decides WHERE things sit and HOW they reflow.
+
+   Markup hook contract (aligns with the design's described structure):
+     header.site-header > .container.site-header__inner
+       a.brand · button.nav-toggle · nav[aria-label] > ul.nav__menu > li > a
+     main > section[id].section > .container > ... > .{skills,projects,contact}-grid
+
+   Responsive model (Requirement 15), mobile-first:
+     - base (<= 768px) ....... single-column mobile layout; hamburger shown
+     - >= 769px (769-1024) ... tablet-optimized layout; inline nav links
+     - >= 1025px (> 1024px) .. desktop layout
+     - no horizontal overflow at viewport widths >= 320px
+   Breakpoint values are literal px because CSS custom properties cannot be
+   used inside media-query conditions.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Page container
+   Centered, width-capped wrapper with responsive horizontal padding. border-box
+   keeps padding inside the max-width so the container never exceeds the viewport
+   (supports the no-overflow guarantee, Requirement 15.4).
+   -------------------------------------------------------------------------- */
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+  /* Long words / URLs (e.g. profile links, emails) wrap instead of forcing a
+     horizontal scrollbar. overflow-wrap is inherited by descendant content. */
+  overflow-wrap: break-word;
+}
+
+/* -----------------------------------------------------------------------------
+   Section vertical rhythm
+   Consistent top/bottom breathing room between the page sections.
+   -------------------------------------------------------------------------- */
+main > section,
+.section {
+  padding-block: var(--section-pad-y);
+}
+
+/* -----------------------------------------------------------------------------
+   Site header / navigation bar
+   A persistent horizontal top bar: brand on the left, controls on the right.
+   Positioning is structural here; the bar's background / border / blur are a
+   component concern (components.css).
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding-block: var(--space-3);
+}
+
+/* Brand stays hard-left; its auto end-margin pushes the controls to the right. */
+.brand {
+  margin-inline-end: auto;
+  min-width: 0;
+}
+
+/* Hamburger: shown on mobile, hidden from >= 769px (Requirement 2.3). The
+   toggle's open/close behavior belongs to nav JS. */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive card grids (skills, projects, contact)
+   Base is a single column (mobile, Requirement 15.1). From >= 769px the grids
+   use auto-fit + minmax so cards reflow and the column count grows naturally
+   with the viewport — fewer columns on tablet, more on desktop.
+   -------------------------------------------------------------------------- */
+.skills-grid,
+.projects-grid,
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.skills-grid   { gap: var(--space-5); }
+.projects-grid { gap: var(--space-6); }
+.contact-grid  { gap: var(--space-4); }
+
+/* Grid children must be allowed to shrink below their content's intrinsic width
+   (min-width:0) and never spill past their track (max-width:100%) — this is what
+   keeps long titles, stacks, and URLs from forcing horizontal overflow at narrow
+   widths (Requirement 15.4). */
+.skills-grid > *,
+.projects-grid > *,
+.contact-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Media inside content never exceeds its column (Requirement 15.4). Zero
+   specificity via :where() so the reset and components layers can override. */
+main :where(img, svg, video, canvas) {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =============================================================================
+   Tablet and up — viewport >= 769px (covers the 769-1024px range, Req 15.2)
+   Navigation switches from the hamburger to inline links (Req 2.3), and the
+   card grids go multi-column.
+   ============================================================================= */
+@media (min-width: 769px) {
+  .container {
+    padding-inline: var(--space-6);
+  }
+
+  .site-header__inner {
+    flex-wrap: nowrap;
+  }
+
+  /* Hamburger hidden; the inline link row is owned by components.css .nav__menu. */
+  .nav-toggle {
+    display: none;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+}
+
+/* =============================================================================
+   Desktop — viewport > 1024px (Requirement 15.3)
+   Roomier horizontal gutters and larger grid gaps for the wider canvas; the
+   auto-fit grids above already add columns as width grows.
+   ============================================================================= */
+@media (min-width: 1025px) {
+  .container {
+    padding-inline: var(--space-8);
+  }
+
+  .skills-grid {
+    gap: var(--space-6);
+  }
+
+  .projects-grid {
+    gap: var(--space-8);
+  }
+}

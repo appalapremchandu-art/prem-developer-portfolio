@@ -60,6 +60,15 @@ export const content = {
       demoUrl: 'https://repairhub-vbit.gt.tc/',
       repoUrl: null,
       preview: 'repairhub',
+      // YouTube demo walkthrough. Rendered as a clickable thumbnail + "Watch
+      // demo" control that opens the video in a new tab (see render.js
+      // projectVideo). url / thumbnail are the exact YouTube URLs for this video
+      // (id qXOBASjCX8M); omit this `video` block to hide the demo again.
+      video: {
+        url: 'https://www.youtube.com/watch?v=qXOBASjCX8M',
+        thumbnail: 'https://img.youtube.com/vi/qXOBASjCX8M/hqdefault.jpg',
+        label: 'Watch demo',
+      },
     },
     {
       name: 'LifeLink',

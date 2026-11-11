@@ -401,8 +401,63 @@ function projectPreview(kind) {
 }
 
 /**
+ * Build a project's demo-video block: a responsive, clickable YouTube thumbnail
+ * with a decorative play-button overlay and a visible "Watch demo" badge. The
+ * entire thumbnail is a single safe external anchor — it opens the video in a
+ * new tab with `rel="noopener noreferrer"` (reusing the same new-tab safety as
+ * `externalLink`) and carries an aria-label, so the `<img>` is decorative
+ * (empty `alt`) and the overlay/badge are `aria-hidden`. Nothing is invented:
+ * the caller renders this only when a project supplies both `video.url` and
+ * `video.thumbnail`, so a project without a demo video gets no block and no
+ * placeholder. Built with `el`/`heroSvg` and `textContent` only (never
+ * innerHTML), so it stays injection-safe.
+ *
+ * @param {{url: string, thumbnail: string, label?: string}} video - The demo video.
+ * @param {?string} projectName - Used to phrase the link's accessible name.
+ * @returns {HTMLElement} A `.project-card__video` block wrapping the thumbnail link.
+ */
+function projectVideo(video, projectName) {
+  const label = isSupplied(video.label) ? video.label : 'Watch demo';
+  const name = isSupplied(projectName) ? projectName : 'project';
+
+  // Decorative: the link's aria-label is the accessible name, so alt is empty.
+  // `aspect-ratio`/`object-fit` in CSS crop the thumbnail's letterbox bars.
+  const thumb = el('img', {
+    className: 'project-card__video-thumb',
+    src: video.thumbnail,
+    alt: '',
+    loading: 'lazy',
+    decoding: 'async',
+  });
+
+  const playIcon = heroSvg(
+    'svg',
+    { viewBox: '0 0 24 24', class: 'project-card__video-icon', 'aria-hidden': 'true', focusable: 'false' },
+    [heroSvg('path', { d: 'M8 5v14l11-7z', fill: 'currentColor' })]
+  );
+  const play = el('span', { className: 'project-card__video-play', 'aria-hidden': 'true' }, [playIcon]);
+  const badge = el('span', { className: 'project-card__video-badge', 'aria-hidden': 'true' }, [label]);
+  const overlay = el('span', { className: 'project-card__video-overlay', 'aria-hidden': 'true' }, [play, badge]);
+
+  const link = el(
+    'a',
+    {
+      className: 'project-card__video-link',
+      href: video.url,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      'aria-label': `Watch the ${name} demo on YouTube (opens in a new tab)`,
+    },
+    [thumb, overlay]
+  );
+
+  return el('div', { className: 'project-card__video' }, [link]);
+}
+
+/**
  * Projects_Section (Requirements 6.1–6.7, 18.5). Mounts a card per project with
- * title, tagline, verified description bullets (placeholder when none), one tag
+ * title, tagline, verified description bullets (placeholder when none), an
+ * optional demo-video thumbnail (only when the project supplies one), one tag
  * per stack entry (design Property 7), and Live demo / Source links via
  * `externalLink` (control placeholder when a URL is absent).
  *
@@ -441,6 +496,13 @@ export function renderProjects(container, content = defaultContent) {
         )
       : null;
 
+    // Optional demo video: rendered only when both a watch URL and a thumbnail
+    // are supplied, so projects without a video get no block (and no placeholder).
+    const video = project.video || {};
+    const videoNode = isSupplied(video.url) && isSupplied(video.thumbnail)
+      ? projectVideo(video, project.name)
+      : null;
+
     const stack = Array.isArray(project.stack) ? project.stack : [];
     const stackNode = el(
       'div',
@@ -458,7 +520,7 @@ export function renderProjects(container, content = defaultContent) {
 
     return el('article', { className: 'card project-card', dataset: { reveal: '' } }, [
       preview,
-      el('div', { className: 'project-card__body' }, [title, tagline, descriptionNode, stackNode, links]),
+      el('div', { className: 'project-card__body' }, [title, tagline, descriptionNode, videoNode, stackNode, links]),
     ]);
   });
 

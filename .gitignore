@@ -15,4 +15,5 @@ dist/
 verify-out.txt
 verify-shots/
 scripts/verify-lifelink.mjs
+scripts/verify-repairhub.mjs
 scripts/generate-og.mjs
